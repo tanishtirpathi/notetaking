@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <button id="close-nav">✖</button>
+      <nav id="sidebar" class="hidden">
+        <div>
+          <button class="newnote" id="add-note">
+            <i class="fa-solid fa-plus"></i> new note
+          </button>
+        </div>
+        <div class="notebook">
+          <h4>your notes</h4>
+        </div>
+        <div id="notes-list"></div>
+      </nav>
+
+      <div id="note-modal" class="modal hidden">
+        <div class="modal-content">
+          <button id="close-modal">✖</button>
+            id="modal-note-area"
+            placeholder="Write your note here..."
+            contenteditable="true"></div>
+          <div class="colorpage">
+            <div class="color red" data-color="#ff8383"></div>
+            <div class="color blue" data-color="#71dbc4"></div>
+            <div class="color yellow" data-color="#66580b"></div>
+            <div class="color green" data-color="#37e96c"></div>
+            <div class="color black" data-color="#161616"></div>
+          </div>
+
+          <button class="btnsave" id="save-modal-note">Save Note</button>
+        </div>
+      </div>
+
+      <button id="toggle-nav"><i class="fa-solid fa-bars"></i></button>
+
+      <div id="notes-container">
+        <h1>My Notes</h1>
+        <div id="notes-display"></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
