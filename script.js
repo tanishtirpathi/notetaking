@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // State
   const state = {
-    notes: JSON.parse(localStorage.getItem("notes")) || [],
+    notes: localStorage.getItem("notes") || [],
     editingIndex: null,
     selectedColor: "#71dbc4", // Default color
   };
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       elements.noteArea.innerHTML = "";
       state.editingIndex = null;
-      
+
       // Reset to default color for new notes
       selectColor("#71dbc4");
       elements.colorButtons.forEach((btn) => {
