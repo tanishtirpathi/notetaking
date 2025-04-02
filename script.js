@@ -13,13 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     colorButtons: document.querySelectorAll(".color"),
   };
 
-  // State
-  const state = {
-    notes: localStorage.getItem("notes") || [],
-    editingIndex: null,
-    selectedColor: "#71dbc4", // Default color
-  };
-
   // Initialize
   function init() {
     renderNotes();
