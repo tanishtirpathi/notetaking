@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addNoteBtn: document.getElementById("add-note"),
     colorButtons: document.querySelectorAll(".color"),
   };
+  localStorage.setItem("notes", "[]");
 
   // State - FIX: Parse JSON from localStorage
   const state = {
@@ -379,3 +380,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // Start the app
   init();
 });
+console.log(localStorage.getItem("notes"));
