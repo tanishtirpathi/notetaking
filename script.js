@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createNoteObject(content) {
     return {
-      id: Date.now().toString(),
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 5), // More unique ID
       content: content.trim(),
       color: state.selectedColor,
       createdAt: new Date().toISOString(),
@@ -113,13 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     sortedNotes.forEach((note, index) => {
-      // Sidebar note item
+      // Sidebar note item - Add delete button with data-id
       const noteItem = document.createElement("div");
       noteItem.className = "sidebar-note-item";
+      noteItem.setAttribute("data-id", note.id); // Add data-id to the item itself
       const notePreview = note.content.substring(0, 20).replace(/\n/g, " ");
       noteItem.innerHTML = `
         <span>${notePreview}${notePreview.length >= 20 ? "..." : ""}</span>
-       
+        <button class="delete-note" data-id="${note.id}">🗑</button>
       `;
       elements.notesList.appendChild(noteItem);
 
@@ -139,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           minute: "2-digit",
         });
 
-      // Use data-id instead of data-index for more reliable identification
+      // Use data-id for identification
       noteCard.innerHTML = `
         <div class="note-actions">
           <button class="edit-note" data-id="${note.id}">✏️</button>
@@ -189,6 +190,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       elements.noteArea.innerHTML = "";
       state.editingIndex = null;
+      
+      // Reset to default color for new notes
+      selectColor("#71dbc4");
+      elements.colorButtons.forEach((btn) => {
+        if (btn.getAttribute("data-color") === "#71dbc4") {
+          btn.classList.add("selected");
+        }
+      });
     }
 
     // Focus the note area
@@ -231,13 +240,11 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteNote(e.target.dataset.id);
       }
     } else if (e.target.closest(".sidebar-note-item")) {
-      // Find the note id from the delete button in this item
-      const deleteBtn = e.target
-        .closest(".sidebar-note-item")
-        .querySelector(".delete-note");
-      if (deleteBtn) {
-        const id = deleteBtn.dataset.id;
-        openModal(id);
+      // Get the noteItem element and its data-id
+      const noteItem = e.target.closest(".sidebar-note-item");
+      const noteId = noteItem.getAttribute("data-id");
+      if (noteId) {
+        openModal(noteId);
       }
     }
   }
