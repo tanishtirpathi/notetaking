@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notes App</title>
+    <title>Arc Notes</title>
 
+    <!-- Combined stylesheet requests for better performance -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -12,53 +13,100 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
 
+    <!-- Preloading fonts for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="icon.jpg" />
+    <!-- Add app theme color for mobile browsers -->
+    <meta name="theme-color" content="#021412" />
   </head>
   <body>
     <div class="container">
-      <button id="close-nav">✖</button>
+      <!-- Sidebar Navigation -->
       <nav id="sidebar" class="hidden">
-        <div>
+        <button id="close-nav" aria-label="Close sidebar">✖</button>
+        <div class="sidebar-header">
           <button class="newnote" id="add-note">
             <i class="fa-solid fa-plus"></i> new note
           </button>
         </div>
+
+        <!-- Search functionality -->
+
         <div class="notebook">
           <h4>your notes</h4>
         </div>
         <div id="notes-list"></div>
       </nav>
 
-      <div id="note-modal" class="modal hidden">
+      <!-- Note Editor Modal -->
+      <div id="note-modal" class="modal hidden" aria-modal="true" role="dialog">
         <div class="modal-content">
-          <button id="close-modal">✖</button>
+          <button id="close-modal" aria-label="Close modal">X</button>
+          <div
             id="modal-note-area"
+            class="note-editor"
             placeholder="Write your note here..."
-            contenteditable="true"></div>
-          <div class="colorpage">
-            <div class="color red" data-color="#ff8383"></div>
-            <div class="color blue" data-color="#71dbc4"></div>
-            <div class="color yellow" data-color="#66580b"></div>
-            <div class="color green" data-color="#37e96c"></div>
-            <div class="color black" data-color="#161616"></div>
+            contenteditable="true"
+            aria-label="Note content editor"
+            role="textbox"></div>
+          <div
+            class="colorpage"
+            role="radiogroup"
+            aria-label="Note color options">
+            <div
+              class="color red"
+              data-color="#ff8383"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"></div>
+            <div
+              class="color blue"
+              data-color="#71dbc4"
+              role="radio"
+              aria-checked="true"
+              tabindex="0"></div>
+            <div
+              class="color yellow"
+              data-color="#e0ff6e"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"></div>
+            <div
+              class="color green"
+              data-color="#37e96c"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"></div>
+            <div
+              class="color black"
+              data-color="#161616"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"></div>
           </div>
 
           <button class="btnsave" id="save-modal-note">Save Note</button>
         </div>
       </div>
 
-      <button id="toggle-nav"><i class="fa-solid fa-bars"></i></button>
+      <!-- Main Navigation Toggle -->
+      <button id="toggle-nav" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
 
-      <div id="notes-container">
-        <h1>My Notes</h1>
-        <div id="notes-display"></div>
-      </div>
+      <!-- Main Content Area -->
+      <main id="notes-container">
+        <h1>Arc Notes</h1>
+        <div id="notes-display" role="region" aria-label="Notes display"></div>
+      </main>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
   </body>
 </html>
