@@ -626,46 +626,257 @@ body {
     gap: 20px;
   }
 }
+/* Enhanced Mobile Styles - Keeping desktop styles intact */
 
+/* Mobile-specific adjustments - only apply below certain breakpoints */
 @media (max-width: 768px) {
-  #notes-display {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    padding: 15px 5px;
-  }
-
-  .modal-content {
-    width: 92%;
-    padding: 20px;
-  }
-
-  #notes-container {
-    margin-left: 0;
-    padding: 15px 10px;
-  }
-
-  #toggle-nav {
-    z-index: 15;
-  }
-
+  /* Improved sidebar for mobile */
   #sidebar {
-    width: 280px;
+    width: 85%;
+    max-width: 320px;
+    border-right: none;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+  }
+
+  /* More visible and easier to tap toggle button */
+  #toggle-nav {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    left: 12px;
+    top: 12px;
+  }
+  
+  #toggle-nav:hover {
+    transform: none; /* Remove hover effect that doesn't work well on touch */
+  }
+  
+  /* Improve note card layout and spacing */
+  #notes-display {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+    padding: 60px 12px 15px 12px; /* Add top padding to account for toggle button */
+  }
+  
+  #notes-container {
+    padding: 10px 5px;
+  }
+  
+  /* Enhance note cards for touch */
+  .note-card {
+    padding: 22px;
+    min-height: 250px;
+  }
+  
+  /* Always show action buttons on mobile */
+  .note-card .note-actions {
+    opacity: 1;
+    top: 12px;
+    right: 12px;
+  }
+  
+  /* Bigger touch targets */
+  .edit-note, .delete-note-card {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+  
+  /* Better modal for mobile screens */
+  .modal-content {
+    width: 94%;
+    padding: 20px 15px;
+    max-height: 85vh;
+    margin-bottom: 20px;
+  }
+  
+  /* Title adjustments for mobile */
+  #notes-container h1 {
+    font-size: 2.2rem;
+    margin-top: 50px; /* Space for the toggle button */
+    margin-bottom: 20px;
   }
 }
 
+/* Extra small devices */
 @media (max-width: 480px) {
+  /* Full width cards with better spacing */
   #notes-display {
     grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 55px 10px 15px 10px;
   }
-
+  
+  .note-card {
+    border-radius: 14px;
+    margin-bottom: 5px;
+    transition: transform 0.2s ease;
+  }
+  
+  .note-card:hover {
+    transform: translateY(-4px); /* Smaller transform for mobile */
+  }
+  
+  /* Improved mobile header */
   #notes-container h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
+    margin-top: 60px;
+    margin-bottom: 15px;
   }
-
+  
+  /* Better modal for tiny screens */
   .modal-content {
+    padding: 18px 14px;
+    width: 96%;
+    border-radius: 14px;
+  }
+  
+  #modal-note-area {
+    min-height: 200px;
     padding: 15px;
+    font-size: 0.95rem;
   }
 
+  /* Better color picker for mobile */
+  .colorpage {
+    gap: 12px;
+    padding: 3px;
+  }
+  
+  .color {
+    height: 35px;
+    width: 35px;
+  }
+  
+  /* Improved buttons for mobile */
+  .btnsave, .newnote {
+    padding: 13px 15px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  
+  /* Improved search for mobile */
+  #search-notes {
+    padding: 10px 32px 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  /* Better note list in sidebar */
+  .sidebar-note-item {
+    padding: 12px;
+    margin-bottom: 5px;
+  }
+}
+
+/* Portrait orientation optimizations */
+@media (max-width: 768px) and (orientation: portrait) {
+  /* Optimize note cards for portrait mode */
+  .note-card {
+    min-height: auto;
+    padding-bottom: 30px;
+  }
+  
+  /* Full-screen modal for portrait */
+  .modal-content {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
   #modal-note-area {
-    min-height: 250px;
+    flex-grow: 1;
+    max-height: none;
+  }
+}
+
+/* Landscape orientation optimizations */
+@media (max-width: 900px) and (orientation: landscape) {
+  #sidebar {
+    padding-top: 50px; /* Space for the close button */
+  }
+  
+  #notes-display {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .modal-content {
+    max-height: 80vh;
+    width: 90%;
+  }
+  
+  #modal-note-area {
+    min-height: 150px;
+  }
+}
+
+/* Bottom fixed "New Note" button for mobile */
+@media (max-width: 768px) {
+  /* Create a floating action button for new notes */
+  #mobile-new-note {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--accent) 0%, #064942 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    z-index: 5;
+    transition: var(--transition-standard);
+  }
+  
+  #mobile-new-note:hover, #mobile-new-note:active {
+    transform: scale(1.05);
+    background: linear-gradient(145deg, #096b60 0%, var(--accent) 100%);
+  }
+  
+  /* Only show the floating button when sidebar is hidden */
+  #sidebar:not(.hidden) ~ #mobile-new-note {
+    display: none;
+  }
+  
+  /* Add bottom padding to container to account for floating button */
+  #notes-container {
+    padding-bottom: 80px;
+  }
+}
+
+/* Add smooth transitions for all interactions */
+#sidebar, #notes-container, .note-card, .modal-content, 
+.edit-note, .delete-note-card, #toggle-nav, .btnsave, .newnote {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Loading state styles for mobile */
+@media (max-width: 768px) {
+  .loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(11, 87, 80, 0.2);
+    border-radius: 50%;
+    border-top-color: var(--accent);
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 }

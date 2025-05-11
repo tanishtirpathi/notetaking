@@ -12,9 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     addNoteBtn: document.getElementById("add-note"),
     colorButtons: document.querySelectorAll(".color"),
   };
-  localStorage.setItem("notes", "[]");
 
-  // State - FIX: Parse JSON from localStorage
+  // State - Load notes from localStorage
   const state = {
     notes: JSON.parse(localStorage.getItem("notes") || "[]"),
     editingIndex: null,
@@ -120,11 +119,18 @@ document.addEventListener("DOMContentLoaded", () => {
       noteItem.setAttribute("data-id", note.id); // Add data-id to the item itself
       const notePreview = note.content.substring(0, 20).replace(/\n/g, " ");
 
-      // FIX: Use innerText instead of innerHTML for user-generated content preview
-      noteItem.innerHTML = `
-        <span>${notePreview}${notePreview.length >= 20 ? "..." : ""}</span>
-        <button class="delete-note" data-id="${note.id}">🗑</button>
-      `;
+      // Use innerText instead of innerHTML for user-generated content preview
+      const noteSpan = document.createElement("span");
+      noteSpan.textContent = notePreview + (notePreview.length >= 20 ? "..." : "");
+      
+      noteItem.appendChild(noteSpan);
+      
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "delete-note";
+      deleteBtn.textContent = "🗑";
+      deleteBtn.setAttribute("data-id", note.id);
+      
+      noteItem.appendChild(deleteBtn);
       elements.notesList.appendChild(noteItem);
 
       // Main note card
@@ -143,15 +149,38 @@ document.addEventListener("DOMContentLoaded", () => {
           minute: "2-digit",
         });
 
-      // Use data-id for identification
-      noteCard.innerHTML = `
-        <div class="note-actions">
-          <button class="edit-note" data-id="${note.id}">✏️</button>
-          <button class="delete-note-card" data-id="${note.id}">🗑</button>
-        </div>
-        <div class="note-content">${note.content}</div>
-        <div class="note-date">Updated: ${formattedDate}</div>
-      `;
+      // Create note actions div
+      const actionsDiv = document.createElement("div");
+      actionsDiv.className = "note-actions";
+      
+      // Edit button
+      const editBtn = document.createElement("button");
+      editBtn.className = "edit-note";
+      editBtn.textContent = "✏️";
+      editBtn.setAttribute("data-id", note.id);
+      actionsDiv.appendChild(editBtn);
+      
+      // Delete button
+      const deleteCardBtn = document.createElement("button");
+      deleteCardBtn.className = "delete-note-card";
+      deleteCardBtn.textContent = "🗑";
+      deleteCardBtn.setAttribute("data-id", note.id);
+      actionsDiv.appendChild(deleteCardBtn);
+      
+      noteCard.appendChild(actionsDiv);
+      
+      // Note content
+      const contentDiv = document.createElement("div");
+      contentDiv.className = "note-content";
+      contentDiv.innerHTML = note.content;
+      noteCard.appendChild(contentDiv);
+      
+      // Note date
+      const dateDiv = document.createElement("div");
+      dateDiv.className = "note-date";
+      dateDiv.textContent = `Updated: ${formattedDate}`;
+      noteCard.appendChild(dateDiv);
+      
       elements.notesDisplay.appendChild(noteCard);
     });
   }
@@ -293,18 +322,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!document.getElementById("search-notes")) {
       const searchDiv = document.createElement("div");
       searchDiv.className = "search-container";
-      searchDiv.innerHTML = `
-        <input type="text" id="search-notes" placeholder="Search notes...">
-        <button id="clear-search">✖</button>
-      `;
+      
+      const searchInput = document.createElement("input");
+      searchInput.type = "text";
+      searchInput.id = "search-notes";
+      searchInput.placeholder = "Search notes...";
+      
+      const clearBtn = document.createElement("button");
+      clearBtn.id = "clear-search";
+      clearBtn.textContent = "✖";
+      
+      searchDiv.appendChild(searchInput);
+      searchDiv.appendChild(clearBtn);
 
       // Insert before notes list
       elements.sidebar.insertBefore(searchDiv, elements.notesList);
 
       // Add event listeners
-      const searchInput = document.getElementById("search-notes");
-      const clearBtn = document.getElementById("clear-search");
-
       searchInput.addEventListener("input", filterNotes);
       clearBtn.addEventListener("click", () => {
         searchInput.value = "";
@@ -380,4 +414,3 @@ document.addEventListener("DOMContentLoaded", () => {
   // Start the app
   init();
 });
-console.log(localStorage.getItem("notes"));

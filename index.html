@@ -105,7 +105,62 @@
         <div id="notes-display" role="region" aria-label="Notes display"></div>
       </main>
     </div>
+<!-- Add this mobile floating action button to your HTML -->
+<button id="mobile-new-note" aria-label="Create new note">
+  <i class="fa fa-plus"></i>
+</button>
 
+<!-- Add a loading indicator (optional) -->
+<div class="loading-indicator hidden">
+  <div class="spinner"></div>
+  <p>Loading notes...</p>
+</div>
+
+<!-- Add a meta viewport tag in the head section if not already present -->
+<!-- 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+-->
+
+<!-- Add this JavaScript code to make the mobile new note button work -->
+<script>
+  // Make mobile new note button open the modal
+  const mobileNewNoteBtn = document.getElementById('mobile-new-note');
+  if (mobileNewNoteBtn) {
+    mobileNewNoteBtn.addEventListener('click', function() {
+      // Call the same function your regular new note button calls
+      // For example:
+      document.querySelector('.modal').classList.remove('hidden');
+      document.getElementById('modal-note-area').focus();
+    });
+  }
+  
+  // Add touch support for better mobile experience
+  document.addEventListener('DOMContentLoaded', function() {
+    // Prevent zooming on inputs on iOS
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        document.body.classList.add('input-focused');
+      });
+      
+      input.addEventListener('blur', function() {
+        document.body.classList.remove('input-focused');
+      });
+    });
+    
+    // Add active state for touch devices
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('touchstart', function() {
+        this.classList.add('active-touch');
+      });
+      
+      button.addEventListener('touchend', function() {
+        this.classList.remove('active-touch');
+      });
+    });
+  });
+</script>
     <!-- Scripts -->
     <script src="script.js" defer></script>
   </body>
